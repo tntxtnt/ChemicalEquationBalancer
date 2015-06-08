@@ -111,3 +111,10 @@ bool Fraction::operator<(const Fraction& rhs)const
 {
     return static_cast<long long>(nu) * rhs.de < static_cast<long long>(de) * rhs.nu;
 }
+
+Fraction Fraction::operator - ()const
+{
+    Fraction f = *this;
+    f.nu = -f.nu;
+    return f;
+}
