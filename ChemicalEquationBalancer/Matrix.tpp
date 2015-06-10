@@ -1,20 +1,25 @@
-#include "ElementaryMatrix.h"
+#include <iostream>
+#include <vector>
 
-ElementaryMatrix::ElementaryMatrix(int rows, int cols) : m(rows, std::vector<Fraction>(cols))
+template <typename T>
+Matrix<T>::Matrix(int rows, int cols) : m(rows, std::vector<T>(cols))
 {
 }
 
-void ElementaryMatrix::set(int r, int c, const Fraction& f)
+template <typename T>
+void Matrix<T>::set(int r, int c, const T& f)
 {
     m[r][c] = f;
 }
 
-const Fraction& ElementaryMatrix::get(int r, int c)const
+template <typename T>
+const T& Matrix<T>::get(int r, int c)const
 {
     return m[r][c];
 }
 
-std::ostream& operator<<(std::ostream& out, const ElementaryMatrix& a)
+template <typename T>
+std::ostream& operator<<(std::ostream& out, const Matrix<T>& a)
 {
     for (size_t r = 0; r < a.m.size(); ++r)
     {
@@ -25,24 +30,28 @@ std::ostream& operator<<(std::ostream& out, const ElementaryMatrix& a)
     return out;
 }
 
-void ElementaryMatrix::rowInterchange(int r1, int r2)
+template <typename T>
+void Matrix<T>::rowInterchange(int r1, int r2)
 {
     if (r1 != r2) m[r1].swap(m[r2]);
 }
 
-void ElementaryMatrix::rowMultiply(int r, const Fraction& f, int startCol)
+template <typename T>
+void Matrix<T>::rowMultiply(int r, const T& f, int startCol)
 {
     for (size_t c = startCol; c < m[0].size(); ++c)
         m[r][c] *= f;
 }
 
-void ElementaryMatrix::rowAddMultiple(int r1, int r2, const Fraction& f, int startCol)
+template <typename T>
+void Matrix<T>::rowAddMultiple(int r1, int r2, const T& f, int startCol)
 {
     for (size_t c = startCol; c < m[0].size(); ++c)
         m[r1][c] += m[r2][c] * f;
 }
 
-void ElementaryMatrix::convertToRRef()
+template <typename T>
+void Matrix<T>::convertToRRef()
 {
     size_t ROWS = m.size(), COLS = m[0].size();
     size_t r, c, i, j;
@@ -54,7 +63,7 @@ void ElementaryMatrix::convertToRRef()
         //swap with current working row
         rowInterchange(r, i);
         //normalize that row
-        rowMultiply(r, Fraction(1) / m[r][c], c);
+        rowMultiply(r, T(1) / m[r][c], c);
         //clear all m[r++][c] entries (~ convert to REF first)
         for (i = r + 1; i < ROWS; ++i) rowAddMultiple(i, r, -m[i][c], c);
         ++r;

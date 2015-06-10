@@ -18,9 +18,6 @@
     <ClCompile Include="Fraction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ElementaryMatrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="elementarymatrix_testdriver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -29,8 +26,13 @@
     <ClInclude Include="Fraction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ElementaryMatrix.h">
+    <ClInclude Include="Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Matrix.tpp">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
