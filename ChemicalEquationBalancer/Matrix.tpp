@@ -62,20 +62,21 @@ void Matrix<T>::convertToRRef()
         if (i == ROWS) continue; //cannot find such row
         //swap with current working row
         rowInterchange(r, i);
-        //normalize that row
-        rowMultiply(r, T(1) / m[r][c], c);
         //clear all m[r++][c] entries (~ convert to REF first)
-        for (i = r + 1; i < ROWS; ++i) rowAddMultiple(i, r, -m[i][c], c);
+        for (i = r + 1; i < ROWS; ++i) rowAddMultiple(i, r, -m[i][c] / m[r][c], c);
         ++r;
     } //r-1 = index of the last non-zero row
-    //convert to RREF 
+    //now that m is REF, convert it to reduced REF  (RREF)
     for (--r; r > 0; --r)
     {
-        for (j = 0; j < COLS; ++j) if (m[r][j]) break;
+        for (j = 0; j < COLS; ++j) if (m[r][j]) break; //find first non-zero entry (m[r][j])
         for (i = 0; i < r; ++i)
         {
-            if (m[i][j]) rowAddMultiple(i, r, -m[i][j], j+1);
+            if (m[i][j]) rowAddMultiple(i, r, -m[i][j] / m[r][j], j+1);
             m[i][j] = 0;
         }
+        //normalize current row
+        rowMultiply(r, T(1) / m[r][j], c);
+        m[r][j] = 1;
     }
 }
