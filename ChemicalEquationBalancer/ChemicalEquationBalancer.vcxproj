@@ -77,11 +77,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Fraction.cpp" />
-    <ClCompile Include="elementarymatrix_testdriver.cpp" />
+    <ClCompile Include="formulaparser_testdriver.cpp" />
+    <ClCompile Include="FormulaParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Fraction.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="FormulaParser.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Matrix.tpp" />
