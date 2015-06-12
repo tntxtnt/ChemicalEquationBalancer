@@ -2,6 +2,7 @@
 #include "Matrix.h"
 #include "FormulaParser.h"
 #include <set>
+#include <algorithm>
 
 typedef std::vector<int>           IntVect;
 typedef std::vector<std::string>   StrVect;
@@ -111,6 +112,11 @@ Matrix<Fraction> buildMatrix(const std::vector<StrToIntMap>& lhs,
     return m;
 }
 
+bool isPositive(const Fraction& f)
+{
+    return f.numerator() > 0;
+}
+
 IntVect equationCoefficients(const StrVect& lhsReactants, const StrVect& rhsReactants)
 {
     IntVect result;
@@ -134,20 +140,16 @@ IntVect equationCoefficients(const StrVect& lhsReactants, const StrVect& rhsReac
     Matrix<Fraction> mat = buildMatrix(lhs, rhs, elemSet);
     mat.convertToRRef();
 
-    // check if there are (nReactants - 1) cells with negative values
-    int negCellsCount = 0;
-    for (int i = 0; i < nReactants - 1; ++i)
-        if (mat.get(i, nReactants - 1) < Fraction(0))
-            ++negCellsCount;
-    if (negCellsCount != nReactants - 1)
-        throw std::invalid_argument("There are 0 or negative coef(s)"
-                                    " => no solution");
-
     // get coefs
     std::vector<Fraction> coefs;
     for (int i = 0; i < nReactants - 1; ++i)
         coefs.push_back(-mat.get(i, nReactants - 1));
     coefs.push_back(1);
+
+    // check if all coefs are positive
+    if (std::count_if(coefs.begin(), coefs.end(), isPositive) != nReactants)
+        throw std::invalid_argument("There are zero or negative coef(s)"
+                                    " => no solution");
 
     // find least common factor of denominators
     long long dLcf = 1;
