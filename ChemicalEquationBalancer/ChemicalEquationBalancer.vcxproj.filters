@@ -21,7 +21,7 @@
     <ClCompile Include="FormulaParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="formulaparser_testdriver.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

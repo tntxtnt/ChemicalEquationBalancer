@@ -77,8 +77,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Fraction.cpp" />
-    <ClCompile Include="formulaparser_testdriver.cpp" />
     <ClCompile Include="FormulaParser.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Fraction.h" />

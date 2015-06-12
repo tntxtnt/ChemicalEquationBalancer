@@ -11,6 +11,11 @@ long long Fraction::gcd(long long q, long long r)
     return q%r ? gcd(r, q%r) : r;
 }
 
+long long Fraction::lcf(long long a, long long b)
+{
+    return a * b / gcd(a, b);
+}
+
 void Fraction::standardize()
 {
     if (de < 0) { nu = -nu; de = -de; }
@@ -117,4 +122,14 @@ Fraction Fraction::operator - ()const
     Fraction f = *this;
     f.nu = -f.nu;
     return f;
+}
+
+int Fraction::numerator()const
+{
+    return nu;
+}
+
+int Fraction::denominator()const
+{
+    return de;
 }

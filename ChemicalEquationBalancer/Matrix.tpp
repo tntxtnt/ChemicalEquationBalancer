@@ -67,7 +67,7 @@ void Matrix<T>::convertToRRef()
         ++r;
     } //r-1 = index of the last non-zero row
     //now that m is REF, convert it to reduced REF  (RREF)
-    for (--r; r > 0; --r)
+    for (--r; r+1 > 0; --r)
     {
         for (j = 0; j < COLS; ++j) if (m[r][j]) break; //find first non-zero entry (m[r][j])
         for (i = 0; i < r; ++i)
@@ -76,7 +76,6 @@ void Matrix<T>::convertToRRef()
             m[i][j] = 0;
         }
         //normalize current row
-        rowMultiply(r, T(1) / m[r][j], c);
-        m[r][j] = 1;
+        rowMultiply(r, T(1) / m[r][j], j);
     }
 }
