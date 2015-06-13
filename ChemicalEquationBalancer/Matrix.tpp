@@ -67,14 +67,12 @@ void Matrix<T>::convertToRRef()
         ++r;
     } //r-1 = index of the last non-zero row
     //now that m is REF, convert it to reduced REF  (RREF)
-    for (--r; r+1 > 0; --r)
+    while (r--) /* NEAT */
     {
-        for (j = 0; j < COLS; ++j) if (m[r][j]) break; //find first non-zero entry (m[r][j])
-        for (i = 0; i < r; ++i)
-        {
-            if (m[i][j]) rowAddMultiple(i, r, -m[i][j] / m[r][j], j+1);
-            m[i][j] = 0;
-        }
+        //find first non-zero entry (m[r][j])
+        for (j = 0; j < COLS; ++j) if (m[r][j]) break;
+        //clear all m[--r][c] entries
+        for (i = 0; i < r; ++i) rowAddMultiple(i, r, -m[i][j] / m[r][j], j);
         //normalize current row
         rowMultiply(r, T(1) / m[r][j], j);
     }

@@ -11,26 +11,35 @@ typedef std::set<std::string>      StrSet;
 
 IntVect equationCoefficients(const StrVect&, const StrVect&);
 void printEquation(const StrVect&, const IntVect&, size_t = 0);
+void printBalancedEquation(const StrVect&, const StrVect&);
 
 int main()
 {
     StrVect lhsReactants, rhsReactants;
-    
-    /*lhsReactants.push_back("H2O");
+    lhsReactants.push_back("H2O");
     lhsReactants.push_back("CO2");
-    rhsReactants.push_back("H2CO3");*/
+    rhsReactants.push_back("H2CO3");
+    printBalancedEquation(lhsReactants, rhsReactants);
 
-    /*lhsReactants.push_back("K2Cr2O7");
+    lhsReactants.clear();
+    rhsReactants.clear();
+    lhsReactants.push_back("K2Cr2O7");
     lhsReactants.push_back("H2SO3");
     lhsReactants.push_back("HCl");
     rhsReactants.push_back("KCl");
     rhsReactants.push_back("Cr2(SO4)3");
-    rhsReactants.push_back("H2O");*/
+    rhsReactants.push_back("H2O");
+    printBalancedEquation(lhsReactants, rhsReactants);
 
-    /*lhsReactants.push_back("Fe2(SO4)3");
+    lhsReactants.clear();
+    rhsReactants.clear();
+    lhsReactants.push_back("Fe2(SO4)3");
     lhsReactants.push_back("H2SO4");
-    rhsReactants.push_back("Fe(HSO4)2");*/
+    rhsReactants.push_back("Fe(HSO4)2");
+    printBalancedEquation(lhsReactants, rhsReactants);
 
+    lhsReactants.clear();
+    rhsReactants.clear();
     lhsReactants.push_back("K4Fe(CN)6");
     lhsReactants.push_back("KMnO4");
     lhsReactants.push_back("H2SO4");
@@ -40,14 +49,7 @@ int main()
     rhsReactants.push_back("HNO3");
     rhsReactants.push_back("CO2");
     rhsReactants.push_back("H2O");
-
-    try {
-        IntVect coefs = equationCoefficients(lhsReactants, rhsReactants);
-        printEquation(lhsReactants, coefs);
-        printEquation(rhsReactants, coefs, lhsReactants.size());
-    } catch (const std::exception& ex) {
-        std::cerr << "ERROR: " << ex.what() << "\n";
-    }
+    printBalancedEquation(lhsReactants, rhsReactants);
 }
 
 
@@ -162,4 +164,16 @@ IntVect equationCoefficients(const StrVect& lhsReactants, const StrVect& rhsReac
         result.push_back((coefs[i] *= static_cast<int>(dLcf)).numerator());
 
     return result;
+}
+
+void printBalancedEquation(const StrVect& lhsReactants, const StrVect& rhsReactants)
+{
+    try {
+        IntVect coefs = equationCoefficients(lhsReactants, rhsReactants);
+        printEquation(lhsReactants, coefs);
+        printEquation(rhsReactants, coefs, lhsReactants.size());
+    } catch (const std::exception& ex) {
+        std::cerr << "ERROR: " << ex.what() << "\n";
+    }
+    std::cout << "\n";
 }
