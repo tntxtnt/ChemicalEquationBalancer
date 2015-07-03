@@ -13,7 +13,7 @@ long long Fraction::gcd(long long q, long long r)
 
 long long Fraction::lcf(long long a, long long b)
 {
-    return a * b / gcd(a, b);
+    return a / gcd(a, b) * b;
 }
 
 void Fraction::standardize()
