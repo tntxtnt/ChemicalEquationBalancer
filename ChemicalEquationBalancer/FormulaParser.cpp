@@ -42,6 +42,7 @@ void FormulaParser::parse(const std::string& s)
             std::map<std::string,int> f = q.top();
             q.pop();
             std::map<std::string,int>& dst = q.empty() ? formula : q.top();
+            if (!count) count = 1;
             for (std::map<std::string,int>::iterator it = f.begin(); it != f.end(); ++it)
                 dst[it->first] += it->second * count;
             count = 0;

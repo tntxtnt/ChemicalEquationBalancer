@@ -12,55 +12,48 @@ typedef std::set<std::string>      StrSet;
 IntVect equationCoefficients(const StrVect&, const StrVect&);
 void printEquation(const StrVect&, const IntVect&, size_t = 0);
 void printBalancedEquation(const StrVect&, const StrVect&);
+void printBalancedEquation(const std::string&);
 
 int main()
 {
-    StrVect lhsReactants, rhsReactants;
-    lhsReactants.push_back("H2O");
-    lhsReactants.push_back("CO2");
-    rhsReactants.push_back("H2CO3");
-    printBalancedEquation(lhsReactants, rhsReactants);
-
-    lhsReactants.clear();
-    rhsReactants.clear();
-    lhsReactants.push_back("K2Cr2O7");
-    lhsReactants.push_back("H2SO3");
-    lhsReactants.push_back("HCl");
-    rhsReactants.push_back("KCl");
-    rhsReactants.push_back("Cr2(SO4)3");
-    rhsReactants.push_back("H2O");
-    printBalancedEquation(lhsReactants, rhsReactants);
-
-    lhsReactants.clear();
-    rhsReactants.clear();
-    lhsReactants.push_back("Fe2(SO4)3");
-    lhsReactants.push_back("H2SO4");
-    rhsReactants.push_back("Fe(HSO4)2");
-    printBalancedEquation(lhsReactants, rhsReactants);
-
-    lhsReactants.clear();
-    rhsReactants.clear();
-    lhsReactants.push_back("K4Fe(CN)6");
-    lhsReactants.push_back("KMnO4");
-    lhsReactants.push_back("H2SO4");
-    rhsReactants.push_back("KHSO4");
-    rhsReactants.push_back("Fe2(SO4)3");
-    rhsReactants.push_back("MnSO4");
-    rhsReactants.push_back("HNO3");
-    rhsReactants.push_back("CO2");
-    rhsReactants.push_back("H2O");
-    printBalancedEquation(lhsReactants, rhsReactants);
+    printBalancedEquation("H2O + CO2 = H2CO3");
+    printBalancedEquation("K2Cr2O7 + H2SO3 + HCl = KCl + Cr2(SO4)3 + H2O");
+    printBalancedEquation("Fe2(SO4)3 + H2SO4 = Fe(HSO4)2");
+    printBalancedEquation("K4Fe(CN)6 + KMnO4 + H2SO4 = KHSO4 + Fe2(SO4)3 + MnSO4 + HNO3 + CO2 + H2O");
+    std::cout << "\n";
+    printBalancedEquation("C5H12 + O2 -> CO2 + H2O");
+    printBalancedEquation("Zn + HCl -> ZnCl2 + H2");
+    printBalancedEquation("Ca(OH)2 + H3PO4 -> Ca3(PO4)2 + H2O");
+    printBalancedEquation("FeCl3 + NH4OH -> Fe(OH)3 + NH4Cl");
+    printBalancedEquation("K4[Fe(SCN)6] + K2Cr2O7 + H2SO4 -> Fe2(SO4)3 + Cr2(SO4)3 + CO2 + H2O + K2SO4 + KNO3");
 }
 
 
+
+void printBalancedEquation(const std::string& equation)
+{
+    StrVect reactants[2];
+    std::istringstream iss(equation);
+    std::string compound;
+    int i = 0;
+    while (iss >> compound)
+    {
+        if (compound == "=" || compound == "->")
+            ++i;
+        else if (compound != "+")
+            reactants[i].push_back(compound);
+    }
+    printBalancedEquation(reactants[0], reactants[1]);
+}
+
 void printEquation(const StrVect& reactants, const IntVect& coefs, size_t k)
 {
-    if (coefs[k] != 1) std::cout << coefs[k] << ' ';
+    if (coefs[k] != 1) std::cout << coefs[k];
     std::cout << reactants[0];
     for (size_t i = 1; i < reactants.size(); ++i)
     {
         std::cout << " + ";
-        if (coefs[i+k] != 1) std::cout << coefs[i+k] << ' ';
+        if (coefs[i+k] != 1) std::cout << coefs[i+k];
         std::cout << reactants[i];
     }
     std::cout << (k ? "\n" : " = ");
@@ -175,5 +168,4 @@ void printBalancedEquation(const StrVect& lhsReactants, const StrVect& rhsReacta
     } catch (const std::exception& ex) {
         std::cerr << "ERROR: " << ex.what() << "\n";
     }
-    std::cout << "\n";
 }

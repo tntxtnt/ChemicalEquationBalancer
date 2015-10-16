@@ -3,7 +3,16 @@
 
 *.sln
 *.vcxproj
-*..filters
+*.filters
+*.layout
+*.depend
+
+*.exe
+
+*.cbp
+.objs/
+*.o
+
 
 # User-specific files
 *.suo
